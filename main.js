@@ -16,8 +16,6 @@ function clicked(button) {
 
     switch (buttonText) {
         case 'Play':
-            timer.classList.remove('stopped');
-
             if (!initialized) {
                 initializeTimer(sessionTime)
             }
