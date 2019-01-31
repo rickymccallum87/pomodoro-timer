@@ -10,13 +10,17 @@ function eventListeners(){
 }
 
 function clicked(button){
-    let buttonText = button.innerText;
+    let buttonText = button.innerText,
+    paused = false;
+    let targetTime;
 
     switch(buttonText){
         case 'Play':
             timer.classList.remove('stopped');
-
-            let targetTime = new Date().getTime() + (25*60*1000),
+            if (!paused) {
+                targetTime = new Date().getTime() + (25*60*1000);
+            }
+            
             eachSecond = setInterval(function(){
                 let now = new Date().getTime(),
                 interval = targetTime - now;
@@ -34,6 +38,8 @@ function clicked(button){
             }, 1000);
             break;
         case 'Pause':
+            clearInterval(eachSecond);
+            paused = true;
             break;
         case 'Reset':
             break;
