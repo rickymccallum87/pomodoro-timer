@@ -13,8 +13,8 @@ function clicked(button){
     let buttonText = button.innerText;
 
     switch(buttonText){
-        case 'Pomodoro':
-            timer(0, 25, 0);
+        case 'Play':
+            setInterval(timer(), 1000);
             break;
     }
 }
@@ -26,10 +26,10 @@ function clicked(button){
 // Then each second, display difference between that future time
 // and the current time in #timer.textContent
 
-function timer(hours, minutes, seconds){
-    let targetTime = new Date(hours, minutes, seconds).getTime(),
+function timer(){
+    let targetTime = new Date(0, 25, 0).getTime(),
     now = new Date().getTime(),
-    interval = targetTime - now;
+    interval = targetTime + now;
     // Pad the time if it is a single digit number, to retain the correct formatting.
     // function checkTime(i) {
     //     if (i < 10) {
@@ -38,10 +38,10 @@ function timer(hours, minutes, seconds){
     //     return i;
     // }
     //Calculations
-    var hrs = Math.floor(interval/(60*60*1000));
-    var mins = Math.floor(interval/(60*1000));
-    var secs = Math.floor(interval/1000);
+    var hrs = Math.floor((interval%(1000*60*60*24))/(1000*60*60));
+    var mins = Math.floor((interval%(1000*60*60))/(1000*60));
+    var secs = Math.floor((interval%(1000*60)) /1000);
 
     document.getElementById('timer').innerText = hrs + ":" + mins + ':' + secs;
-}
+};
 
