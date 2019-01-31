@@ -44,34 +44,37 @@ function clicked(button){
             played = 0;
             break;
         case 'Reset':
-            timer.classList.remove('stopped');
             clearInterval(eachSecond);    
-            initialized = false;
-            played = 0;
-            document.getElementById('timer').innerText = `${sessionTime}:00`;            
+            resetTimer();
             break;
         case 'Pomodoro':
             sessionTime = 25;
-            timer.classList.remove('stopped');
-            document.getElementById('timer').innerText = `${sessionTime}:00`;
+            resetTimer();
             break;
         case 'Short Break':
             sessionTime = 5;
-            timer.classList.remove('stopped');
-            document.getElementById('timer').innerText = `${sessionTime}:00`;
+            resetTimer();
             break;
         case 'Long Break':
             sessionTime = 10;
-            timer.classList.remove('stopped');
-            document.getElementById('timer').innerText = `${sessionTime}:00`;
+            resetTimer();
             break;
     }
 }
+
 function initializeTimer(minutes){
     targetTime = new Date().getTime() + (minutes*60*1000);
     now = new Date().getTime();
     interval = targetTime - now;
     initialized = true;
+}
+
+function resetTimer() {
+    clearInterval(eachSecond);
+    initialized = false;
+    played = 0;
+    timer.classList.remove('stopped');
+    document.getElementById('timer').innerText = `${sessionTime}:00`;
 }
 
 //Pad the time if it is a single digit number, to retain the correct formatting.
