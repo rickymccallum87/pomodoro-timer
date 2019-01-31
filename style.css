@@ -1,0 +1,17 @@
+#container {
+    width: 400px;
+    margin: 0 auto;
+}
+
+#timer {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+
+.functions {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+button {
+}
