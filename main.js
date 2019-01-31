@@ -1,3 +1,4 @@
+let targetTime, interval, eachSecond, numPlays = 0; 
 eventListeners();
 
 function eventListeners(){
@@ -10,42 +11,46 @@ function eventListeners(){
 }
 
 function clicked(button){
-    let buttonText = button.innerText,
-    paused = false;
-    let targetTime;
-
+    let buttonText = button.innerText;
+    
     switch(buttonText){
         case 'Play':
             timer.classList.remove('stopped');
-            if (!paused) {
-                targetTime = new Date().getTime() + (25*60*1000);
-            }
             
-            eachSecond = setInterval(function(){
-                let now = new Date().getTime(),
-                interval = targetTime - now;
 
-                if (interval < 0){
-                    clearInterval(eachSecond);
-                    let timer = document.getElementById('timer');
-                    timer.classList.add('stopped');
-                } else {
-                    var mins = Math.floor((interval%(1000*60*60))/(1000*60));
-                    var secs = Math.floor((interval%(1000*60)) /1000);
-                    document.getElementById('timer').innerText = mins + ':' + secs;
-                }
+            if (numPlays == 0){
+                initializeTimer()
+            }
 
-            }, 1000);
+            if (numPlays > 0){
+                eachSecond = setInterval(function(){
+                    interval -= 1000;
+                    if (interval < 0){
+                        clearInterval(eachSecond);
+                        let timer = document.getElementById('timer');
+                        timer.classList.add('stopped');
+                    } else {
+                        var mins = Math.floor((interval%(1000*60*60))/(1000*60));
+                        var secs = Math.floor((interval%(1000*60)) /1000);
+                        document.getElementById('timer').innerText = mins + ':' + secs;
+                    }
+
+                }, 1000);
+            }
             break;
         case 'Pause':
             clearInterval(eachSecond);
-            paused = true;
             break;
         case 'Reset':
             break;
     }
 }
-
+function initializeTimer(){
+    targetTime = new Date().getTime() + (25*60*1000);
+    now = new Date().getTime();
+    interval = targetTime - now;
+    numPlays += 1;
+}
 // Pad the time if it is a single digit number, to retain the correct formatting.
 // function checkTime(i) {
 //     if (i < 10) {
