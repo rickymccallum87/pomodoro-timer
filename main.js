@@ -32,7 +32,7 @@ function clicked(button){
                         timer.classList.add('stopped');
                     } else {
                         var mins = Math.floor((interval%(1000*60*60))/(1000*60));
-                        var secs = Math.floor((interval%(1000*60)) /1000);
+                        var secs = checkTime(Math.floor((interval%(1000*60)) /1000));
                         document.getElementById('timer').innerText = mins + ':' + secs;
                     }
 
@@ -44,6 +44,7 @@ function clicked(button){
             played = 0;
             break;
         case 'Reset':
+            timer.classList.remove('stopped');
             clearInterval(eachSecond);    
             initialized = false;
             played = 0;
@@ -51,14 +52,17 @@ function clicked(button){
             break;
         case 'Pomodoro':
             sessionTime = 25;
+            timer.classList.remove('stopped');
             document.getElementById('timer').innerText = `${sessionTime}:00`;
             break;
         case 'Short Break':
             sessionTime = 5;
+            timer.classList.remove('stopped');
             document.getElementById('timer').innerText = `${sessionTime}:00`;
             break;
         case 'Long Break':
             sessionTime = 10;
+            timer.classList.remove('stopped');
             document.getElementById('timer').innerText = `${sessionTime}:00`;
             break;
     }
@@ -69,15 +73,11 @@ function initializeTimer(minutes){
     interval = targetTime - now;
     initialized = true;
 }
-// Pad the time if it is a single digit number, to retain the correct formatting.
-// function checkTime(i) {
-//     if (i < 10) {
-//         i = '0' + i;
-//     }
-//     return i;
-// }
 
-// Pad with zeroes when necessary
-function padTime() {
-
+//Pad the time if it is a single digit number, to retain the correct formatting.
+function checkTime(i) {
+    if (i < 10) {
+        i = '0' + i;
+    }
+    return i;
 }
