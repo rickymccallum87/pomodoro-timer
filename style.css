@@ -17,8 +17,8 @@
     display: flex;
     justify-content: center;
 
-    padding: 1em;
-    font-size: 5em;
+    padding: .5em;
+    font-size: 8em;
     text-align: center;
     font-family: 'Courier New', Courier, monospace;
 }
