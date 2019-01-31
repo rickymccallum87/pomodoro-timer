@@ -14,34 +14,41 @@ function clicked(button){
 
     switch(buttonText){
         case 'Play':
-            setInterval(timer(), 1000);
+            timer.classList.remove('stopped');
+
+            let targetTime = new Date().getTime() + (25*60*1000),
+            eachSecond = setInterval(function(){
+                let now = new Date().getTime(),
+                interval = targetTime - now;
+
+                if (interval < 0){
+                    clearInterval(eachSecond);
+                    let timer = document.getElementById('timer');
+                    timer.classList.add('stopped');
+                } else {
+                    var mins = Math.floor((interval%(1000*60*60))/(1000*60));
+                    var secs = Math.floor((interval%(1000*60)) /1000);
+                    document.getElementById('timer').innerText = mins + ':' + secs;
+                }
+
+            }, 1000);
+            break;
+        case 'Pause':
+            break;
+        case 'Reset':
             break;
     }
 }
 
-// Pseudo:
-// User presses 'Pomodoro' button
-// minutes = 25 is sent to timer()
-// timer() takes current time (new Date()) and adds 25 minutes
-// Then each second, display difference between that future time
-// and the current time in #timer.textContent
+// Pad the time if it is a single digit number, to retain the correct formatting.
+// function checkTime(i) {
+//     if (i < 10) {
+//         i = '0' + i;
+//     }
+//     return i;
+// }
 
-function timer(){
-    let targetTime = new Date(0, 25, 0).getTime(),
-    now = new Date().getTime(),
-    interval = targetTime + now;
-    // Pad the time if it is a single digit number, to retain the correct formatting.
-    // function checkTime(i) {
-    //     if (i < 10) {
-    //         i = '0' + i;
-    //     }
-    //     return i;
-    // }
-    //Calculations
-    var hrs = Math.floor((interval%(1000*60*60*24))/(1000*60*60));
-    var mins = Math.floor((interval%(1000*60*60))/(1000*60));
-    var secs = Math.floor((interval%(1000*60)) /1000);
+// Pad with zeroes when necessary
+function padTime() {
 
-    document.getElementById('timer').innerText = hrs + ":" + mins + ':' + secs;
-};
-
+}

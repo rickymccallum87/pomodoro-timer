@@ -33,3 +33,7 @@
     height: 4em;
     width: 8em;
 }
+
+.stopped {
+    color: red;
+}
