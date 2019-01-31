@@ -1,4 +1,4 @@
-let targetTime, interval, eachSecond, numPlays = 0; 
+let targetTime, interval, eachSecond, played = 0, initialized = false, sessionTime = 25; 
 eventListeners();
 
 function eventListeners(){
@@ -17,12 +17,13 @@ function clicked(button){
         case 'Play':
             timer.classList.remove('stopped');
             
-
-            if (numPlays == 0){
-                initializeTimer()
+            if (!initialized){
+                initializeTimer(sessionTime)
             }
 
-            if (numPlays > 0){
+            played += 1;
+
+            if (played == 1){
                 eachSecond = setInterval(function(){
                     interval -= 1000;
                     if (interval < 0){
@@ -40,16 +41,33 @@ function clicked(button){
             break;
         case 'Pause':
             clearInterval(eachSecond);
+            played = 0;
             break;
         case 'Reset':
+            clearInterval(eachSecond);    
+            initialized = false;
+            played = 0;
+            document.getElementById('timer').innerText = `${sessionTime}:00`;            
+            break;
+        case 'Pomodoro':
+            sessionTime = 25;
+            document.getElementById('timer').innerText = `${sessionTime}:00`;
+            break;
+        case 'Short Break':
+            sessionTime = 5;
+            document.getElementById('timer').innerText = `${sessionTime}:00`;
+            break;
+        case 'Long Break':
+            sessionTime = 10;
+            document.getElementById('timer').innerText = `${sessionTime}:00`;
             break;
     }
 }
-function initializeTimer(){
-    targetTime = new Date().getTime() + (25*60*1000);
+function initializeTimer(minutes){
+    targetTime = new Date().getTime() + (minutes*60*1000);
     now = new Date().getTime();
     interval = targetTime - now;
-    numPlays += 1;
+    initialized = true;
 }
 // Pad the time if it is a single digit number, to retain the correct formatting.
 // function checkTime(i) {
